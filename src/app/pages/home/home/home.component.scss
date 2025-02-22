@@ -1,0 +1,27 @@
+.custom-card {
+  background-color: #f0f0f0 !important; /* Light gray background */
+  width: 250px; /* Set a fixed width for better alignment */
+  min-height: 150px; /* Adjust height for consistency */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.card-style {
+  border: 2px solid #fff;
+  border-radius: 30px;
+  background: rgba(235, 232, 232, 0.4);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}

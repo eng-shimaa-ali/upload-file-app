@@ -1,0 +1,30 @@
+<p-breadcrumb class="max-w-full" [model]="items">
+  <ng-template pTemplate="item" let-item>
+    <ng-container *ngIf="item.route; else elseBlock">
+      <a [routerLink]="item.route" class="p-menuitem-link">
+        <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
+        <span class="font-semibold">{{ item.label }}</span>
+      </a>
+    </ng-container>
+    <ng-template #elseBlock>
+      <a [href]="item.url">
+        <span class="">{{ item.label }}</span>
+      </a>
+    </ng-template>
+  </ng-template>
+</p-breadcrumb>
+
+<div class="card flex flex-wrap gap-3 mt-3 card-style p-3">
+  <ng-container *ngFor="let item of homeMenu">
+    <p-card
+      class="shadow-2 border-round cursor-pointer"
+      (click)="goToLink(item.name, item.route)"
+    >
+      <div class="flex flex-column align-items-center text-center p-3">
+        <i [class]="item.icon" class="text-4xl" style="font-size: 2.5rem"></i>
+        <p class="font-bold text-lg fs-3 mt-2">{{ item.name }}</p>
+        <p class="text-secondary text-sm mt-1">{{ item.description }}</p>
+      </div>
+    </p-card>
+  </ng-container>
+</div>
