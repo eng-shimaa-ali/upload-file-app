@@ -1,0 +1,107 @@
+<p-breadcrumb class="max-w-full" [model]="items">
+  <ng-template pTemplate="item" let-item>
+    <ng-container *ngIf="item.route; else elseBlock">
+      <a [routerLink]="item.route" class="p-menuitem-link">
+        <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
+        <span class="font-semibold">{{ item.label }}</span>
+      </a>
+    </ng-container>
+    <ng-template #elseBlock>
+      <a [href]="item.url">
+        <span class="">{{ item.label }}</span>
+      </a>
+    </ng-template>
+  </ng-template>
+</p-breadcrumb>
+
+<p-card [style]="{ width: 'width' }" styleClass="styleClass">
+  <div class="container mx-4 flex">
+    <div class="flex flex-row justify-content-between">
+      <div class="col-6">
+        <h2>Task List</h2>
+      </div>
+
+      <div class="col-6">
+        <button class="btn btn-primary" (click)="addnewTask()">
+          Add New Task
+        </button>
+      </div>
+    </div>
+
+    <table class="table table-bordered mt-3">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <!-- <th>Name</th> -->
+          <th>Title</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.id }}</td>
+          <!-- <td>{{ task.name }}</td> -->
+          <td>{{ task.title }}</td>
+          <td>{{ task.status }}</td>
+          <td>
+            <p-button label="Change Staue" (onClick)="changeStaues(task)">
+            </p-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <ul>
+      <li *ngFor="let task of tasks">
+        <strong>ID:</strong> {{ task.id }} - <strong>Title:</strong>
+        {{ task.title }} - <strong>Status:</strong> {{ task.status }}
+      </li>
+    </ul> -->
+  </div>
+
+  <!-- <div class="flex">
+    <label for="is">id </label>
+    <input />
+    <label for="is">descbtion</label>
+    <input />
+    <div class="flex gap-2 flex-column">
+      <div>
+        <label for="is">Title </label>
+        <input />
+      </div>
+      <div>
+        <label for="is">State</label>
+        <p-dropdown
+          [options]="optionsState"
+          placeholder="placeholder"
+          optionLabel="optionLabel"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="flex">
+    <label for="is">id </label>
+    <input />
+    <label for="is">descbtion</label>
+    <input />
+    <div class="flex gap-2 flex-column">
+      <div>
+        <label for="is">Title </label>
+        <input />
+      </div>
+      <div>
+        <label for="is">State</label>
+        <p-dropdown
+          [options]="optionsState"
+          placeholder="placeholder"
+          optionLabel="optionLabel"
+        ></p-dropdown>
+      </div>
+    </div>
+  </div> -->
+  <p-footer>
+    <!-- <p-button icon="pi pi-iconName" label="In progresss"></p-button>
+    <p-button icon="pi pi-iconName" label="complated"></p-button> -->
+  </p-footer>
+</p-card>
