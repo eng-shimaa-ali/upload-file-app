@@ -1,0 +1,98 @@
+<p-breadcrumb class="max-w-full" [model]="items">
+  <ng-template pTemplate="item" let-item>
+    <ng-container *ngIf="item.route; else elseBlock">
+      <a [routerLink]="item.route" class="p-menuitem-link">
+        <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
+        <span class="font-semibold">{{ item.label }}</span>
+      </a>
+    </ng-container>
+    <ng-template #elseBlock>
+      <a [href]="item.url">
+        <span class="">{{ item.label }}</span>
+      </a>
+    </ng-template>
+  </ng-template>
+</p-breadcrumb>
+
+<div class="card-style">
+  <p-card header="File Upload">
+    <p-fileUpload
+      #fileUploadComponent
+      name="file"
+      [multiple]="true"
+      [customUpload]="true"
+      (onSelect)="onFileSelect($event)"
+      accept="image/png, image/jpeg, image/jpg"
+      maxFileSize="5242880"
+    >
+    </p-fileUpload>
+
+    <div class="file-list" *ngIf="files.length > 0">
+      <div *ngFor="let fileData of files; let i = index" class="file-item">
+        <p-card>
+          <img [src]="fileData.previewUrl" alt="Preview" class="thumbnail" />
+          <div class="file-info">
+            <p>
+              {{ fileData.file.name }} ({{
+                (fileData.file.size / 1024).toFixed(1)
+              }}
+              KB)
+            </p>
+            <p-progressBar
+              *ngIf="fileData.progress > 0 && !fileData.uploaded"
+              [value]="fileData.progress"
+            ></p-progressBar>
+            <button
+              pButton
+              label="Preview"
+              icon="pi pi-eye"
+              class="p-button-primery"
+              (click)="prviewImg(i)"
+            ></button>
+            <button
+              pButton
+              label="Remove"
+              icon="pi pi-trash"
+              class="p-button-danger"
+              (click)="removeFile(i)"
+            ></button>
+            <button
+              *ngIf="fileData.error"
+              pButton
+              label="Retry"
+              icon="pi pi-refresh"
+              class="p-button-warning"
+              (click)="retryUpload(fileData, i)"
+            ></button>
+            <span *ngIf="fileData.error" class="text-danger">{{
+              fileData.error
+            }}</span>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <button
+      pButton
+      label="Upload All"
+      icon="pi pi-cloud-upload"
+      class="p-button-success"
+      (click)="uploadAll()"
+      [disabled]="files.length === 0"
+    ></button>
+  </p-card>
+</div>
+
+<p-dialog
+  [(visible)]="displayPreview"
+  [modal]="true"
+  [style]="{ width: '60vw' }"
+  header="Image Preview"
+  (onHide)="selectedImageUrl = null"
+>
+  <img
+    *ngIf="selectedImageUrl"
+    [src]="selectedImageUrl"
+    class="preview-image"
+  />
+</p-dialog>
